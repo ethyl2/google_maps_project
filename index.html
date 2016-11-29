@@ -1,0 +1,61 @@
+<html>
+ <head>
+   <title>My Google Maps API Project</title>
+   <style type="text/css">
+     html, body { height: 100%; margin: 0; padding: 0; }
+     #map { height: 100%; }
+   </style>
+ </head>
+
+ <body>
+   <div id="map"></div>
+
+   <script>
+     var map;
+     var markers = [];
+     var locations = [
+       {title: 'Lindon Pioneer Park', location: {lat: 40.335168, lng: -111.702404}},
+       {title: 'Lindon Aquatics Center', location: {lat: 40.340225, lng: -111.716937}},
+       {title: 'Lindon Community Center', location: {lat: 40.339282, lng: -111.715786}},
+       {title: 'Lindon City Center Park', location: {lat: 40.341354, lng: -111.717734}}
+     ]
+     function initMap() {
+       map = new google.maps.Map(document.getElementById('map'), {
+         center: {lat: 40.343286, lng: -111.720761},
+         zoom: 15
+       });
+
+       var infoWindow = new google.maps.InfoWindow();
+       var bounds = new google.maps.LatLngBounds();
+
+       for (var i = 0; i < locations.length; i++) {
+         var name = locations[i].title;
+         var position = locations[i].location;
+         var marker = new google.maps.Marker({
+           position: position,
+           map: map,
+           title: name
+         });
+         markers.push(marker);
+         bounds.extend(marker.position);
+         marker.addListener('click', function() {
+           populateInfoWindow(this, infoWindow);
+         })
+       }
+
+       populateInfoWindow = function(myMarker, myWindow) {
+         if (myWindow.marker != myMarker) {
+           myWindow.marker = myMarker;
+           myWindow.setContent('<div>' + myMarker.title + '</div>');
+           myWindow.open(map, myMarker);
+         }
+       }
+       map.fitBounds(bounds);
+     }
+   </script>
+
+   <script async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcH0ibachO1LuFP-YK5APi23oMNabjykc&v=3&callback=initMap">
+   </script>
+ </body>
+</html>
