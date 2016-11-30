@@ -1,14 +1,21 @@
 <html>
  <head>
    <title>My Google Maps API Project</title>
-   <style type="text/css">
-     html, body { height: 100%; margin: 0; padding: 0; }
-     #map { height: 100%; }
-   </style>
+   <link href="css/styles.css" rel="stylesheet">
+
  </head>
 
  <body>
-   <div id="map"></div>
+   <div class="container">
+     <div class="options-box">
+       <h1>Fun Things to Do and See in Lindon, Utah</h1>
+       <div>
+         <input id="show-places" type="button" value="Show Places">
+         <input id="hide-places" type="button" value="Hide Places">
+       </div>
+     </div>
+     <div id="map"></div>
+   </div>
 
    <script>
      var map;
@@ -33,7 +40,6 @@
          var position = locations[i].location;
          var marker = new google.maps.Marker({
            position: position,
-           map: map,
            title: name
          });
          markers.push(marker);
@@ -46,12 +52,31 @@
        populateInfoWindow = function(myMarker, myWindow) {
          if (myWindow.marker != myMarker) {
            myWindow.marker = myMarker;
-           myWindow.setContent('<div>' + myMarker.title + '</div>');
+           myWindow.setContent('<div>' + myMarker.title + '<br>' + myMarker.position + '</div>');
            myWindow.open(map, myMarker);
          }
        }
+
+       document.getElementById('show-places').addEventListener('click', showPlaces);
+       document.getElementById('hide-places').addEventListener('click', hidePlaces);
+     }
+
+     showPlaces = function() {
+       var bounds = new google.maps.LatLngBounds();
+       // Extend the boundaries of the map for each marker and display the marker
+       for (var i = 0; i < markers.length; i++) {
+         markers[i].setMap(map);
+         bounds.extend(markers[i].position);
+       }
        map.fitBounds(bounds);
      }
+
+     hidePlaces = function() {
+       for (var i = 0; i < markers.length; i++) {
+         markers[i].setMap(null);
+       }
+     }
+
    </script>
 
    <script async defer
