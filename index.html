@@ -40,7 +40,8 @@
          var position = locations[i].location;
          var marker = new google.maps.Marker({
            position: position,
-           title: name
+           title: name,
+           icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
          });
          markers.push(marker);
          bounds.extend(marker.position);
