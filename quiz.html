@@ -1,0 +1,42 @@
+<html>
+ <head>
+   <title>My Google Maps API Project</title>
+   <style>
+   .container {
+     width: 100%;
+   }
+
+   #map {
+     width: 100%;
+   }
+   </style>
+ </head>
+
+ <body>
+   <div class="container">
+     <div id="map"></div>
+  </div>
+
+<script>
+  var $map = document.getElementById('map');
+
+  var streetViewUrl1 = "https://maps.googleapis.com/maps/api/streetview?size=600x300" +
+  "&location=46.414382,10.013988&heading=151.78&pitch=-0.76&key=AIzaSyAcH0ibachO1LuFP-YK5APi23oMNabjykc";
+
+  var streetViewUrl = "https://maps.googleapis.com/maps/api/streetview?size=600x300" +
+  "&location=41.404484,2.175728&heading=100&pitch=30&key=AIzaSyAcH0ibachO1LuFP-YK5APi23oMNabjykc";
+
+  var imgString = "<img src=" + streetViewUrl + ">";
+  var pString = "<p>" + streetViewUrl + "</p>";
+  var mapDiv = document.createElement('div');
+  var showUrl = document.createElement('p');
+  showUrl.innerHTML = pString;
+  mapDiv.innerHTML = imgString;
+  $map.appendChild(mapDiv);
+  $map.appendChild(showUrl);
+
+
+</script>
+
+</body>
+</html>
