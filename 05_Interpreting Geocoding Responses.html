@@ -59,18 +59,19 @@ and Google's Maps API Course, Lesson 2 -->
         geocoder.geocode({'address': address}, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             resultsMap.setCenter(results[0].geometry.location);
-            //TODO: Insert code here to take the first result's formatted address, and LOCATION.
-            document.getElementById('firstComponent').innerHTML="The Formatted Address is:"; // PUT STUFF HERE
-            document.getElementById('secondComponent').innerHTML="The Location is"; // PUT STUFF HERE
+            document.getElementById('firstComponent').innerHTML="The Formatted Address is:<br>" + results[0].formatted_address;
+            document.getElementById('secondComponent').innerHTML="The Location is" +
+            "<br>Lat: " + results[0].geometry.location.lat() + "</br> Lng: " +
+            results[0].geometry.location.lng();
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
           }
         });
       }
     </script>
-    <!--TODO: Insert your API Key in the below call to load the API.-->
+
     <script async defer
-     src="https://maps.googleapis.com/maps/api/js?v=3&key=XXX&callback=initMap">
+     src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAcH0ibachO1LuFP-YK5APi23oMNabjykc&callback=initMap">
     </script>
   </body>
 </html>
