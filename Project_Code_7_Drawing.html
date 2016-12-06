@@ -84,6 +84,7 @@
           <span class="text"> Draw a shape to search within it for homes!</span>
           <input id="toggle-drawing"  type="button" value="Drawing Tools">
         </div>
+        <div id="area-display"></div>
       </div>
       <div id="map"></div>
     </div>
@@ -355,10 +356,21 @@
         }
       }
 
+      // Get area-div for displaying area of polygon
+      var areaDiv = document.getElementById('area-display');
+
       // This function hides all markers outside the polygon,
       // and shows only the ones within it. This is so that the
       // user can specify an exact area of search.
       function searchWithinPolygon() {
+        // First, calculate and display area of polygon:
+        var area = google.maps.geometry.spherical.computeArea(polygon.getPath());
+        var areaString = "<p>Area = " + Math.round(area * 100) / 100 + " m<sup>2</sup>, " +
+        Math.round(area * 1e-6 * 100) / 100 + " km<sup>2</sup>, or " +
+        Math.round(area * 3.861e-7 * 100) / 100 + " mi<sup>2</sup>.</p>";
+        areaDiv.innerHTML = areaString;
+
+        // Show markers inside polygon and hide the rest.
         for (var i = 0; i < markers.length; i++) {
           if (google.maps.geometry.poly.containsLocation(markers[i].position, polygon)) {
             markers[i].setMap(map);
@@ -371,7 +383,7 @@
 
     <script async defer
         src=
-        "https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=MYAPIKEY&v=3&callback=initMap">
+        "https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyAcH0ibachO1LuFP-YK5APi23oMNabjykc&v=3&callback=initMap">
     </script>
 
   </body>
